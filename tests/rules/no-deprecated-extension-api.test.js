@@ -10,7 +10,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'browser.browserAction.setIcon();',
       errors: [
         {
-          message: 'browser.browserAction does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -18,7 +18,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'browser.pageAction.setIcon();',
       errors: [
         {
-          message: 'browser.pageAction does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -26,7 +26,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.browserAction.setIcon();',
       errors: [
         {
-          message: 'chrome.browserAction does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -34,7 +34,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.pageAction.setIcon();',
       errors: [
         {
-          message: 'chrome.pageAction does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -42,7 +42,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.tabs.executeScript();',
       errors: [
         {
-          message: 'tabs.executeScript does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -50,7 +50,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'browser.tabs.executeScript();',
       errors: [
         {
-          message: 'tabs.executeScript does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -58,7 +58,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'tabs.executeScript();',
       errors: [
         {
-          message: 'tabs.executeScript does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -66,7 +66,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.runtime.getBackgroundPage();',
       errors: [
         {
-          message: 'runtime.getBackgroundPage does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -74,7 +74,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.extension.getBackgroundPage();',
       errors: [
         {
-          message: 'extension.getBackgroundPage does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -82,7 +82,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.extension.getExtensionTabs();',
       errors: [
         {
-          message: 'extension.getExtensionTabs does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -90,7 +90,7 @@ ruleTester.run('no-deprecated-extension-api', noDeprecatedExtensionApi, {
       code: 'chrome.extension.getViews();',
       errors: [
         {
-          message: 'extension.getViews does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },

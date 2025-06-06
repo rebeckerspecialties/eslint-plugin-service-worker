@@ -9,7 +9,10 @@ const report = (context, ...nodes) => {
   const nodePath = nodes.map(({ name }) => name).join('.');
   context.report({
     node: nodes[n - 1],
-    message: `${nodePath} does not exist in service worker.`,
+    messageId: 'restricted',
+    data: {
+      api: nodePath,
+    },
   });
 };
 

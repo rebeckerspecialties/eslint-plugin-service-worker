@@ -10,7 +10,7 @@ ruleTester.run('no-dynamic-import', noDynamicImport, {
       code: 'const lastLoaded = import("https://www.test.com")',
       errors: [
         {
-          message: 'dynamic import is restricted in service worker.',
+          messageId: 'restricted',
         },
       ],
     },

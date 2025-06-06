@@ -15,13 +15,35 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
     'p().then(() => {}).catch(() => {});',
     'const plainText = atob(btoa("a")); // "a"',
     'export const window = { notBrowserWindow: true };',
+    // IndexedDB is allowed
+    'const db = await indexedDB.open("mydb", 1);',
+    'indexedDB.deleteDatabase("mydb");',
+    'const transaction = db.transaction(["store"], "readwrite");',
+    // WebCodecs are allowed
+    'const decoder = new VideoDecoder({output: () => {}, error: () => {}});',
+    'const encoder = new VideoEncoder({output: () => {}, error: () => {}});',
+    'const frame = new VideoFrame(canvas, {timestamp: 0});',
+    'const audioDecoder = new AudioDecoder({output: () => {}, error: () => {}});',
+    // performance.now() is allowed
+    'const time = performance.now();',
+    'performance.mark("start");',
+    'performance.measure("duration", "start", "end");',
+    // Streams APIs are allowed
+    'const readable = new ReadableStream();',
+    'const writable = new WritableStream();',
+    'const transform = new TransformStream();',
+    'const strategy = new ByteLengthQueuingStrategy({highWaterMark: 1024});',
+    'const countStrategy = new CountQueuingStrategy({highWaterMark: 100});',
+    'const reader = readable.getReader();',
+    // WorkerNavigator.gpu is allowed (accessing via self.navigator)
+    'const gpu = self.navigator.gpu;',
   ],
   invalid: [
     {
       code: 'open("https://www.test.com");',
       errors: [
         {
-          message: 'open does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -29,7 +51,7 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'alert("hello world");',
       errors: [
         {
-          message: 'alert does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -37,7 +59,7 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'var xhr = new XMLHttpRequest();',
       errors: [
         {
-          message: 'XMLHttpRequest does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -45,7 +67,7 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'var xhr = new window.XMLHttpRequest();',
       errors: [
         {
-          message: 'window does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -53,7 +75,7 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'window.addListener(() => {})',
       errors: [
         {
-          message: 'window does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -61,7 +83,7 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'var canvas = document.createElement(\'canvas\');',
       errors: [
         {
-          message: 'document does not exist in service worker.',
+          messageId: 'restricted',
         },
       ],
     },
@@ -69,7 +91,78 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
       code: 'const objectUrl = URL.createObjectURL()',
       errors: [
         {
-          message: 'URL.createObjectURL does not exist in service worker.',
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // requestAnimationFrame is restricted
+    {
+      code: 'requestAnimationFrame(() => {});',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'cancelAnimationFrame(id);',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // localStorage is restricted
+    {
+      code: 'localStorage.setItem("key", "value");',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const value = localStorage.getItem("key");',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // sessionStorage is restricted
+    {
+      code: 'sessionStorage.setItem("key", "value");',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const value = sessionStorage.getItem("key");',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // Navigator.gpu is restricted (but self.navigator.gpu is allowed)
+    {
+      code: 'const gpu = navigator.gpu;',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const gpu = Navigator.gpu;',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+        {
+          messageId: 'restricted',
         },
       ],
     },

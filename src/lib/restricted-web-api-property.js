@@ -1,5 +1,8 @@
 const mapApiToPropertySet = new Map([
   ['URL', new Set(['createObjectURL'])],
+  // Navigator.gpu is restricted in service workers, but WorkerNavigator.gpu is allowed
+  ['Navigator', new Set(['gpu'])],
+  ['navigator', new Set(['gpu'])],
 ]);
 
 const isWebApiPropertyRestricted = (object, property) => {
