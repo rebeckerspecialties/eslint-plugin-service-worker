@@ -145,6 +145,25 @@ const allowList = [
   'SyncManager',
   'SyncEvent',
 
+  // Background Fetch API
+  'BackgroundFetchManager',
+  'BackgroundFetchRegistration',
+  'BackgroundFetchRecord',
+  'BackgroundFetchEvent',
+  'BackgroundFetchUpdateUIEvent',
+
+  // WebTransport
+  'WebTransport',
+  'WebTransportBidirectionalStream',
+  'WebTransportDatagramDuplexStream',
+  'WebTransportError',
+
+  // WebAssembly
+  'WebAssembly',
+
+  // importScripts (service worker specific)
+  'importScripts',
+
   // Additional allowed globals
   'globalThis',
   'undefined',
@@ -256,6 +275,61 @@ const explicitlyRestricted = [
   'history',
   'location',
   'Navigator', // Constructor should be restricted, but navigator instance is allowed
+
+  // WebXR API (VR/AR) - not available in service workers
+  'XR',
+  'XRBoundedReferenceSpace',
+  'XRFrame',
+  'XRInputSource',
+  'XRInputSourceArray',
+  'XRInputSourceEvent',
+  'XRInputSourcesChangeEvent',
+  'XRPose',
+  'XRReferenceSpace',
+  'XRReferenceSpaceEvent',
+  'XRRenderState',
+  'XRRigidTransform',
+  'XRSession',
+  'XRSessionEvent',
+  'XRSpace',
+  'XRSystem',
+  'XRView',
+  'XRViewerPose',
+  'XRViewport',
+  'XRWebGLLayer',
+
+  // Web Audio API - not available in service workers
+  'AudioContext',
+  'AudioNode',
+  'AudioParam',
+  'AudioBuffer',
+  'AudioBufferSourceNode',
+  'AudioDestinationNode',
+  'AudioListener',
+  'AudioWorklet',
+  'AudioWorkletNode',
+  'AudioWorkletProcessor',
+  'AnalyserNode',
+  'BiquadFilterNode',
+  'ChannelMergerNode',
+  'ChannelSplitterNode',
+  'ConstantSourceNode',
+  'ConvolverNode',
+  'DelayNode',
+  'DynamicsCompressorNode',
+  'GainNode',
+  'IIRFilterNode',
+  'MediaElementAudioSourceNode',
+  'MediaStreamAudioDestinationNode',
+  'MediaStreamAudioSourceNode',
+  'OfflineAudioContext',
+  'OscillatorNode',
+  'PannerNode',
+  'PeriodicWave',
+  'ScriptProcessorNode',
+  'StereoPannerNode',
+  'WaveShaperNode',
+  'BaseAudioContext',
 ];
 
 const restrictedApiList = [...new Set([

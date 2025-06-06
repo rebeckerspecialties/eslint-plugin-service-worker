@@ -37,6 +37,26 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
     'const reader = readable.getReader();',
     // WorkerNavigator.gpu is allowed (accessing via self.navigator)
     'const gpu = self.navigator.gpu;',
+    // WebTransport is allowed
+    'const transport = new WebTransport("https://example.com");',
+    'transport.ready.then(() => {});',
+    // Background Fetch API is allowed
+    'const bgFetch = await registration.backgroundFetch.fetch("my-fetch", ["/ep-5.mp3", "/ep-5-artwork.jpg"], {title: "Episode 5"});',
+    'registration.backgroundFetch.get("my-fetch");',
+    // WebAssembly is allowed
+    'const module = await WebAssembly.instantiateStreaming(fetch("module.wasm"));',
+    'WebAssembly.compile(bytes);',
+    'const memory = new WebAssembly.Memory({initial: 10, maximum: 100});',
+    // importScripts is allowed
+    'importScripts("worker-utils.js");',
+    'importScripts("/js/lib1.js", "/js/lib2.js");',
+    // CacheStorage APIs are allowed
+    'const cache = await caches.open("v1");',
+    'await cache.add("/index.html");',
+    'const response = await cache.match("/index.html");',
+    'await caches.delete("v1");',
+    'const cacheNames = await caches.keys();',
+    'const cacheStorage = self.caches;',
   ],
   invalid: [
     {
@@ -161,6 +181,64 @@ ruleTester.run('no-restricted-web-api', noRestrictedWebApi, {
         {
           messageId: 'restricted',
         },
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // WebXR API is restricted
+    {
+      code: 'const xr = navigator.xr;',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const session = new XRSession();',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const frame = new XRFrame();',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    // Web Audio API is restricted
+    {
+      code: 'const audioContext = new AudioContext();',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const offlineCtx = new OfflineAudioContext(2, 44100 * 40, 44100);',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const oscillator = new OscillatorNode(audioContext);',
+      errors: [
+        {
+          messageId: 'restricted',
+        },
+      ],
+    },
+    {
+      code: 'const gainNode = new GainNode(audioContext);',
+      errors: [
         {
           messageId: 'restricted',
         },
